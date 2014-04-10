@@ -7,7 +7,7 @@ SocketListener::SocketListener(const char *host, const int port)
 {
     sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == -1) {
-        throw std::runtime_error("Could not open socket");
+        throw std::runtime_error(std::string("Could not open socket: ") + strerror(errno));
     }
     
     address = new sockaddr_in;

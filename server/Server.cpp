@@ -18,10 +18,10 @@ Server::Server(const char *host, const int port, const int connectionsLimit)
     memcpy(&address->sin_addr, phe->h_addr, phe->h_length);
     
     if (bind(sock, reinterpret_cast<sockaddr *>(address), sizeof(sockaddr)) == -1) {
-        throw std::runtime_error("Could not bind socket");
+        throw std::runtime_error(std::string("Could not bind socket: ") + strerror(errno));
     }
     if (listen(sock, connectionsLimit) == -1) {
-        throw std::runtime_error("Could not start listen new connections");
+        throw std::runtime_error(std::string("Could not start listen new connections: ") + strerror(errno));
     }
 }
 void Server::run(std::string (*callback)(std::string message))
@@ -34,7 +34,7 @@ void Server::run(std::string (*callback)(std::string message))
         conn = accept(sock, NULL, NULL);
         if (conn < 0) {
             close(sock);
-            throw std::runtime_error("Could not accept new connection");
+            throw std::runtime_error(std::string("Could not accept new connection") + strerror(errno));
         }
         while (read(conn, &request, sizeof(request)) > 0) {
             response = callback(std::string(request));

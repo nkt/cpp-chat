@@ -6,7 +6,7 @@
 Client::Client (const char *host, const int port) : SocketListener(host, port)
 {
     if(connect(sock, reinterpret_cast<sockaddr *>(address), sizeof(sockaddr)) == -1) {
-        throw std::runtime_error("Could not open connection");
+        throw std::runtime_error(std::string("Could not open connection") + strerror(errno));
     }
 }
 
