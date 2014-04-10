@@ -1,10 +1,5 @@
-//
-//  Server.cpp
-//  server
-//
 //  Created by Gusakov Nikita on 10/04/14.
 //  Copyright (c) 2014 nkt. All rights reserved.
-//
 
 #include "Server.h"
 

@@ -1,8 +1,9 @@
+//  Created by Gusakov Nikita on 10/04/14.
+//  Copyright (c) 2014 nkt. All rights reserved.
+
 #include "Server.h"
 
-using namespace std;
-
-std::string messageCallback(std::string message)
+std::string messsager(std::string message)
 {
     std::cout << message;
     std::cin >> message;
@@ -11,6 +12,12 @@ std::string messageCallback(std::string message)
 
 int main()
 {
-    Server s("localhost", 7777);
-    s.run(messageCallback);
+    try {
+        Server s("localhost", 7777);
+        s.run(messsager);
+    } catch (std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return -1;
+    }
+    
 }

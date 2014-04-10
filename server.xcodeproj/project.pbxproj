@@ -10,6 +10,11 @@
 		006831B918F00D5600F6E191 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 006831B818F00D5600F6E191 /* main.cpp */; };
 		006831BB18F00D5600F6E191 /* server.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 006831BA18F00D5600F6E191 /* server.1 */; };
 		00F597F918F71701006F9F99 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F597F718F71701006F9F99 /* Server.cpp */; };
+		00F5980818F72E95006F9F99 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F5980718F72E95006F9F99 /* main.cpp */; };
+		00F5980A18F72E95006F9F99 /* client.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 00F5980918F72E95006F9F99 /* client.1 */; };
+		00F5981018F72F08006F9F99 /* Client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F5980E18F72F08006F9F99 /* Client.cpp */; };
+		00F5981418F7316D006F9F99 /* SocketListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F5981218F7316D006F9F99 /* SocketListener.cpp */; };
+		00F5981518F737FD006F9F99 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F597F718F71701006F9F99 /* Server.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,6 +28,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		00F5980318F72E95006F9F99 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				00F5980A18F72E95006F9F99 /* client.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -31,10 +46,24 @@
 		006831BA18F00D5600F6E191 /* server.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = server.1; sourceTree = "<group>"; };
 		00F597F718F71701006F9F99 /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Server.cpp; sourceTree = "<group>"; };
 		00F597F818F71701006F9F99 /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Server.h; sourceTree = "<group>"; };
+		00F5980518F72E95006F9F99 /* client */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		00F5980718F72E95006F9F99 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		00F5980918F72E95006F9F99 /* client.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = client.1; sourceTree = "<group>"; };
+		00F5980E18F72F08006F9F99 /* Client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Client.cpp; sourceTree = "<group>"; };
+		00F5980F18F72F08006F9F99 /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Client.h; path = /Users/nkt/Documents/XCode/server/client/Client.h; sourceTree = "<absolute>"; };
+		00F5981218F7316D006F9F99 /* SocketListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketListener.cpp; sourceTree = SOURCE_ROOT; };
+		00F5981318F7316D006F9F99 /* SocketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketListener.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		006831B218F00D5600F6E191 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00F5980218F72E95006F9F99 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -47,7 +76,9 @@
 		006831AC18F00D5600F6E191 = {
 			isa = PBXGroup;
 			children = (
+				00F5981118F7315A006F9F99 /* src */,
 				006831B718F00D5600F6E191 /* server */,
+				00F5980618F72E95006F9F99 /* client */,
 				006831B618F00D5600F6E191 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				006831B518F00D5600F6E191 /* server */,
+				00F5980518F72E95006F9F99 /* client */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +102,26 @@
 			);
 			path = server;
 			sourceTree = "<group>";
+		};
+		00F5980618F72E95006F9F99 /* client */ = {
+			isa = PBXGroup;
+			children = (
+				00F5980E18F72F08006F9F99 /* Client.cpp */,
+				00F5980F18F72F08006F9F99 /* Client.h */,
+				00F5980718F72E95006F9F99 /* main.cpp */,
+				00F5980918F72E95006F9F99 /* client.1 */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
+		00F5981118F7315A006F9F99 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				00F5981218F7316D006F9F99 /* SocketListener.cpp */,
+				00F5981318F7316D006F9F99 /* SocketListener.h */,
+			);
+			name = src;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -89,6 +141,23 @@
 			name = server;
 			productName = server;
 			productReference = 006831B518F00D5600F6E191 /* server */;
+			productType = "com.apple.product-type.tool";
+		};
+		00F5980418F72E95006F9F99 /* client */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00F5980B18F72E95006F9F99 /* Build configuration list for PBXNativeTarget "client" */;
+			buildPhases = (
+				00F5980118F72E95006F9F99 /* Sources */,
+				00F5980218F72E95006F9F99 /* Frameworks */,
+				00F5980318F72E95006F9F99 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = client;
+			productName = client;
+			productReference = 00F5980518F72E95006F9F99 /* client */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -113,6 +182,7 @@
 			projectRoot = "";
 			targets = (
 				006831B418F00D5600F6E191 /* server */,
+				00F5980418F72E95006F9F99 /* client */,
 			);
 		};
 /* End PBXProject section */
@@ -124,6 +194,17 @@
 			files = (
 				00F597F918F71701006F9F99 /* Server.cpp in Sources */,
 				006831B918F00D5600F6E191 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00F5980118F72E95006F9F99 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00F5981018F72F08006F9F99 /* Client.cpp in Sources */,
+				00F5981418F7316D006F9F99 /* SocketListener.cpp in Sources */,
+				00F5981518F737FD006F9F99 /* Server.cpp in Sources */,
+				00F5980818F72E95006F9F99 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +295,24 @@
 			};
 			name = Release;
 		};
+		00F5980C18F72E95006F9F99 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		00F5980D18F72E95006F9F99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -234,6 +333,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		00F5980B18F72E95006F9F99 /* Build configuration list for PBXNativeTarget "client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00F5980C18F72E95006F9F99 /* Debug */,
+				00F5980D18F72E95006F9F99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
