@@ -1,18 +1,16 @@
-//
-//  main.cpp
-//  server
-//
-//  Created by Gusakov Nikita on 05/04/14.
-//  Copyright (c) 2014 nkt. All rights reserved.
-//
+#include "Server.h"
 
-#include <iostream>
+using namespace std;
 
-int main(int argc, const char * argv[])
+std::string messageCallback(std::string message)
 {
-
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    std::cout << message;
+    std::cin >> message;
+    return message;
 }
 
+int main()
+{
+    Server s("localhost", 7777);
+    s.run(messageCallback);
+}
