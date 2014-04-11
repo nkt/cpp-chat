@@ -3,11 +3,13 @@
 
 #include "Server.h"
 
-Server::Server(const char *host, const int port, const int connectionsLimit)
+Server::Server(const char *host, const int port, const int connectionsLimit, bool dbg) : debug(dbg)
 {
     sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == -1) {
         throw std::runtime_error("Could not open socket");
+    } else if (debug) {
+        std::cout << "Created socket" << std::endl;
     }
     
     address = new sockaddr_in;
@@ -19,32 +21,63 @@ Server::Server(const char *host, const int port, const int connectionsLimit)
     
     if (bind(sock, reinterpret_cast<sockaddr *>(address), sizeof(sockaddr)) == -1) {
         throw std::runtime_error(std::string("Could not bind socket: ") + strerror(errno));
+    } else if (debug) {
+        std::cout << "Binded socket on " << host << ":" << port << std::endl;
     }
+    
     if (listen(sock, connectionsLimit) == -1) {
         throw std::runtime_error(std::string("Could not start listen new connections: ") + strerror(errno));
+    } else if (debug) {
+        std::cout << "Start listening socket. Max: " << connectionsLimit << std::endl;
     }
 }
-void Server::run(std::string (*callback)(std::string message))
+
+void *Server::listenClients(void *arg)
 {
-    int conn;
-    char request[1024];
-    std::string response;
+    Server *s = (Server *) arg;
+    char message[1024];
+    while (s->isRun) {
+        for (int sender : s->clients) {
+            if (read(sender, &message, sizeof(message)) > 0) {
+                for (int listener : s->clients) {
+                    if (listener != sender) {
+                        write(listener, message, sizeof(message));
+                    }
+                }
+            }
+        }
+        usleep(100);
+    }
+    for (int conn : s->clients) {
+        shutdown(conn, SHUT_RDWR);
+        close(conn);
+    }
+    
+    return NULL;
+}
+
+void Server::run()
+{
+    pthread_t listenerThread;
+    if (pthread_create(&listenerThread, NULL, &Server::listenClients, &*this) != 0){
+        throw std::runtime_error(std::string("Could not create listener thread: ") + strerror(errno));
+    } else if (debug) {
+        std::cout << "Created listener thread" << std::endl;
+    }
     isRun = true;
+    int conn;
     while (isRun) {
         conn = accept(sock, NULL, NULL);
         if (conn < 0) {
             close(sock);
-            throw std::runtime_error(std::string("Could not accept new connection") + strerror(errno));
+            throw std::runtime_error(std::string("Could not accept new connection: ") + strerror(errno));
+        } else if (debug) {
+            std::cout << "Accepted new connection!" << std::endl;
         }
-        while (read(conn, &request, sizeof(request)) > 0) {
-            response = callback(std::string(request));
-            if (response.size() > 0) {
-                write(conn, response.c_str(), response.size());
-            }
-        }
-        shutdown(conn, SHUT_RDWR);
-        close(sock);
+        clients.push_back(conn);
     }
+    shutdown(sock, SHUT_RDWR);
+    close(sock);
 }
 void Server::stop()
 {

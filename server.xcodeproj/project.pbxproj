@@ -284,6 +284,7 @@
 		006831BF18F00D5600F6E191 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INSTALL_PATH = /Users/nkt/Desktop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -291,6 +292,7 @@
 		006831C018F00D5600F6E191 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INSTALL_PATH = /Users/nkt/Desktop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -302,6 +304,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				INSTALL_PATH = /Users/nkt/Desktop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -309,6 +312,7 @@
 		00F5980D18F72E95006F9F99 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INSTALL_PATH = /Users/nkt/Desktop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

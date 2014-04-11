@@ -7,7 +7,7 @@
 std::string messsager(std::string request)
 {
     std::cout << request << std::endl;
-    std::cin >> request;
+    std::getline(std::cin, request, "\n");
     return request;
 }
 

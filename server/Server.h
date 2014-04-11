@@ -6,12 +6,14 @@
 
 #include "SocketListener.h"
 #include <iostream>
+#include <string>
+#include <list>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <netdb.h>
-#include <string>
+#include <pthread.h>
 
 class Server
 {
@@ -19,9 +21,12 @@ private:
     int sock;
     sockaddr_in *address;
     bool isRun = false;
+    bool debug;
+    std::list<int> clients;
+    static void *listenClients(void *args);
 public:
-    Server(const char *host, const int port, const int connectionsLimit = 256);
-    void run(std::string (*callback)(std::string message));
+    Server(const char *host, const int port, const int connectionsLimit = 256, bool debug = false);
+    void run();
     void stop();
 };
 

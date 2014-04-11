@@ -3,18 +3,11 @@
 
 #include "Server.h"
 
-std::string messsager(std::string message)
-{
-    std::cout << message;
-    std::cin >> message;
-    return message;
-}
-
 int main()
 {
     try {
-        Server s("localhost", 7777);
-        s.run(messsager);
+        Server s("localhost", 4001, 256, true);
+        s.run();
     } catch (std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return -1;
