@@ -18,7 +18,7 @@ void *Client::messager(void *arg)
     
     Client *client = static_cast<Client *>(arg);
     
-    for (;;usleep(50)) {
+    for (;;) {
         std::cout << "> ";
         std::cin.getline(message, 1024);
         if (write(client->sock, message, sizeof(message)) < 0) {
@@ -37,7 +37,11 @@ void Client::run()
     char message[1024];
     isRun = true;
     pthread_t messagerThread;
-    pthread_create(&messagerThread, NULL, &Client::messager, &*this);
+    if (pthread_create(&messagerThread, NULL, &Client::messager, &*this) != 0) {
+        throw std::runtime_error(std::string("Could not create messager thread: ") + strerror(errno));
+    } else if (debug) {
+        std::cout << "Created messager thread" << std::endl;
+    }
     while (isRun && read(sock, &message, sizeof(message)) > 0) {
         std::cout << message << std::endl;
     }

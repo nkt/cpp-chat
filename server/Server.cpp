@@ -7,10 +7,11 @@ Server::Server(const char *host, const int port, const int connectionsLimit, boo
 {
     sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == -1) {
-        throw std::runtime_error("Could not open socket");
+        throw std::runtime_error(std::string("Could not open socket: ") + strerror(errno));
     } else if (debug) {
         std::cout << "Created socket" << std::endl;
     }
+    
     if (bind(sock, getAddressByHostname(host, port), sizeof(sockaddr)) == -1) {
         throw std::runtime_error(std::string("Could not bind socket: ") + strerror(errno));
     } else if (debug) {
@@ -41,16 +42,23 @@ void *Server::listenClients(void *arg)
     Server *s = static_cast<Server *>(arg);
     char message[1024];
     while (s->isRun) {
+        if (s->clients.size() == 0) {
+            usleep(100);
+            continue;
+        }
         for (int sender : s->clients) {
-            if (read(sender, &message, sizeof(message)) > 0) {
+            if (recv(sender, &message, sizeof(message), NULL) > 0) {
                 for (int listener : s->clients) {
                     if (listener != sender) {
-                        write(listener, message, sizeof(message));
+                        send(listener, message, sizeof(message), NULL);
                     }
                 }
+                if (s->debug) {
+                    std::cout << "[" << sender <<  "] " << message << std::endl;
+                }
+                memset(message, 0, sizeof(message));
             }
         }
-        usleep(100);
     }
     for (int conn : s->clients) {
         shutdown(conn, SHUT_RDWR);
@@ -83,6 +91,7 @@ void Server::run()
     shutdown(sock, SHUT_RDWR);
     close(sock);
 }
+
 void Server::stop()
 {
     isRun = false;
