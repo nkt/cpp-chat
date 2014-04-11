@@ -19,11 +19,12 @@ class Server
 {
 private:
     int sock;
-    sockaddr_in *address;
     bool isRun = false;
     bool debug;
     std::list<int> clients;
-    static void *listenClients(void *args);
+protected:
+    static void *listenClients(void *arg);
+    sockaddr *getAddressByHostname(const char *host, const int port);
 public:
     Server(const char *host, const int port, const int connectionsLimit = 256, bool debug = false);
     void run();

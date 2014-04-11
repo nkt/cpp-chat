@@ -3,7 +3,7 @@
 
 #include "Server.h"
 
-Server::Server(const char *host, const int port, const int connectionsLimit, bool dbg) : debug(dbg)
+Server::Server(const char *host, const int port, const int connectionsLimit, bool _debug) : debug(_debug)
 {
     sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == -1) {
@@ -11,15 +11,7 @@ Server::Server(const char *host, const int port, const int connectionsLimit, boo
     } else if (debug) {
         std::cout << "Created socket" << std::endl;
     }
-    
-    address = new sockaddr_in;
-    address->sin_family = AF_INET;
-    address->sin_port = htons(port);
-    
-    hostent *phe = gethostbyname(host);
-    memcpy(&address->sin_addr, phe->h_addr, phe->h_length);
-    
-    if (bind(sock, reinterpret_cast<sockaddr *>(address), sizeof(sockaddr)) == -1) {
+    if (bind(sock, getAddressByHostname(host, port), sizeof(sockaddr)) == -1) {
         throw std::runtime_error(std::string("Could not bind socket: ") + strerror(errno));
     } else if (debug) {
         std::cout << "Binded socket on " << host << ":" << port << std::endl;
@@ -30,6 +22,18 @@ Server::Server(const char *host, const int port, const int connectionsLimit, boo
     } else if (debug) {
         std::cout << "Start listening socket. Max: " << connectionsLimit << std::endl;
     }
+}
+
+sockaddr *Server::getAddressByHostname(const char *host, const int port)
+{
+    sockaddr_in *address = new sockaddr_in;
+    address->sin_family = AF_INET;
+    address->sin_port = htons(port);
+    
+    hostent *phe = gethostbyname(host);
+    memcpy(&address->sin_addr, phe->h_addr, phe->h_length);
+    
+    return reinterpret_cast<sockaddr *>(address);
 }
 
 void *Server::listenClients(void *arg)

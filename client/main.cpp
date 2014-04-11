@@ -4,18 +4,11 @@
 #include <iostream>
 #include "Client.h"
 
-std::string messsager(std::string request)
-{
-    std::cout << request << std::endl;
-    std::getline(std::cin, request, "\n");
-    return request;
-}
-
 int main(int argc, const char * argv[])
 {
     try {
-        Client c("localhost", 7777);
-        c.run(messsager);
+        Client c("localhost", 3333, true);
+        c.run();
     } catch (std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return -1;

@@ -16,11 +16,10 @@ class SocketListener
 {
 protected:
     int sock;
-    sockaddr_in *address;
+    sockaddr *getAddressByHostname(const char *host, const int port);
 public:
-    SocketListener(const char *host, const int port);
+    SocketListener(bool debug);
     ~SocketListener();
-    virtual void run(std::string (*callback)(std::string message)) =0;
 };
 
 #endif

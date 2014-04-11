@@ -3,10 +3,10 @@
 
 #include "Server.h"
 
-int main()
+int main(int argc, const char **argv)
 {
     try {
-        Server s("localhost", 4001, 256, true);
+        Server s("localhost", 3333, 1024, true);
         s.run();
     } catch (std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;

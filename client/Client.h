@@ -6,21 +6,24 @@
 
 #include "SocketListener.h"
 #include <iostream>
+#include <string>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <netdb.h>
-#include <string>
+#include <pthread.h>
 
 class Client : SocketListener
 {
 private:
     bool isRun = false;
+    bool debug;
 public:
-    Client(const char *host, const int port);
-    void run(std::string (*callback)(std::string message));
+    Client(const char *host, const int port, bool debug = false);
+    void run();
     void stop();
+    static void *messager(void *arg);
 };
 
 #endif
