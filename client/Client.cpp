@@ -16,7 +16,7 @@ void *Client::messager(void *arg)
 {
     char message[1024];
     
-    Client *client = (Client *)arg;
+    Client *client = static_cast<Client *>(arg);
     
     for (;;usleep(50)) {
         std::cout << "> ";

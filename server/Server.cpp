@@ -38,7 +38,7 @@ sockaddr *Server::getAddressByHostname(const char *host, const int port)
 
 void *Server::listenClients(void *arg)
 {
-    Server *s = (Server *) arg;
+    Server *s = static_cast<Server *>(arg);
     char message[1024];
     while (s->isRun) {
         for (int sender : s->clients) {
